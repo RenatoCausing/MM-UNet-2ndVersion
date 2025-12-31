@@ -447,7 +447,7 @@ if __name__ == '__main__':
         model, 
         opt=config.trainer.optimizer,
         weight_decay=config.trainer.weight_decay,
-        lr=config.trainer.lr, 
+        learning_rate=config.trainer.lr, 
         betas=(0.9, 0.95)
     )
     
