@@ -409,9 +409,18 @@ def get_dataloader(config: EasyDict) -> Tuple[
     cfg_test_dir = getattr(dataset_params, "test_dir", None)
     cfg_image_subdir = getattr(dataset_params, "image_subdir", "input")
     cfg_label_subdir = getattr(dataset_params, "label_subdir", "label")
+    
+    # FIVES dataset pattern
+    if dataset_chosen_name == "FIVES":
+        cfg_train_label_pattern = getattr(dataset_params, "train_label_pattern", "{base_name}.png")
+        cfg_val_label_pattern = getattr(dataset_params, "val_label_pattern", "{base_name}.png")
     # DRIVE
-    cfg_train_label_pattern = getattr(dataset_params, "train_label_pattern", "{base_name}.png")
-    cfg_val_label_pattern = getattr(dataset_params, "val_label_pattern", "{base_name}_manual1.png")
+    elif dataset_chosen_name == "DRIVE":
+        cfg_train_label_pattern = getattr(dataset_params, "train_label_pattern", "{base_name}.png")
+        cfg_val_label_pattern = getattr(dataset_params, "val_label_pattern", "{base_name}_manual1.png")
+    else:
+        cfg_train_label_pattern = getattr(dataset_params, "train_label_pattern", "{base_name}.png")
+        cfg_val_label_pattern = getattr(dataset_params, "val_label_pattern", "{base_name}.png")
     # STARE
     # cfg_train_label_pattern = getattr(dataset_params, "train_label_pattern", "{base_name}.ah.ppm")
     # cfg_val_label_pattern = getattr(dataset_params, "val_label_pattern", "{base_name}.ah.ppm")

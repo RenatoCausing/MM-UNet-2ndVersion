@@ -1,3 +1,8 @@
+# =============================================================================
+# MM-UNet FIVES - Git Ignore File
+# =============================================================================
+
+# Original ignores
 .idea
 uv.lock
 img
@@ -16,3 +21,118 @@ requirements/Mamba/causal-conv1d/dist
 requirements/Mamba/mamba/build
 requirements/Mamba/mamba/mamba_ssm.egg-info
 requirements/Mamba/mamba/dist
+
+# =============================================================================
+# Dataset & Preprocessed Images (IMPORTANT - Large files)
+# =============================================================================
+# Raw dataset
+FIVES/
+fives/
+
+# Preprocessed dataset folders
+fives_preprocessed/
+fives_mmunet/
+preprocessed/
+datasets/
+
+# Any extracted zip files
+*.zip
+
+# =============================================================================
+# Model Weights & Checkpoints (Keep repo lightweight)
+# =============================================================================
+weights/
+checkpoints/
+*.pth
+*.pth.tar
+*.pt
+*.bin
+*.ckpt
+*.safetensors
+
+# Pretrained weights
+pvt_v2_b2.pth
+pretrained/
+
+# =============================================================================
+# Training Outputs
+# =============================================================================
+log/
+*.log
+tensorboard/
+runs/
+wandb/
+
+# Visualization outputs
+output/
+outputs/
+results/
+
+# Numpy arrays
+*.npy
+*.npz
+
+# =============================================================================
+# Python
+# =============================================================================
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.env
+.venv
+
+# =============================================================================
+# IDE & Editor
+# =============================================================================
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# =============================================================================
+# OS
+# =============================================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =============================================================================
+# Jupyter
+# =============================================================================
+.ipynb_checkpoints/
+*.ipynb
+
+# =============================================================================
+# Misc
+# =============================================================================
+tmp/
+temp/
+*.tmp
+*.temp
+.cache/
+*.cache
+.huggingface/

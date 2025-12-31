@@ -1,0 +1,11 @@
+# =============================================================================
+# MM-UNet FIVES - Local Preprocessing Requirements
+# =============================================================================
+# Install these on your LOCAL PC before running preprocess_fives.py
+# pip install -r requirements_local.txt
+# =============================================================================
+
+numpy>=1.21.0
+opencv-python>=4.5.0
+Pillow>=9.0.0
+tqdm>=4.60.0
