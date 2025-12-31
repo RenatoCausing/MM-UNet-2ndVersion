@@ -4,7 +4,15 @@ import torchvision.models as models
 import torch.nn.functional as F
 import timm
 import einops
-from mamba_ssm import Mamba
+import sys
+import os
+
+# Add custom Mamba path for bimamba_type support
+_mamba_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'requirements', 'Mamba', 'mamba')
+if _mamba_path not in sys.path:
+    sys.path.insert(0, _mamba_path)
+
+from mamba_ssm.modules.mamba_simple import Mamba
 
 
 class MMConv(nn.Module):
