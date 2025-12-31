@@ -37,8 +37,8 @@ class MMConv(nn.Module):
                 d_state=16,  # SSM state expansion factor
                 d_conv=4,    # Local convolution width
                 expand=2,    # Block expansion factor
-                bimamba_type="v1",
-                # bimamba_type="v3",   # TODO: set 154 assert bimamba_type=="v3" as none
+                bimamba_type="v3",
+                # bimamba_type="v1",   # TODO: set 154 assert bimamba_type=="v3" as none
                 nslices = num_slices
         )
 
