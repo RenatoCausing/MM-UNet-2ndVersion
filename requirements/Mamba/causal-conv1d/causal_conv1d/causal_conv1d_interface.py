@@ -17,7 +17,11 @@ class CausalConv1dFn(torch.autograd.Function):
         bias = bias.contiguous() if bias is not None else None
         ctx.save_for_backward(x, weight, bias)
         ctx.activation = activation in ["silu", "swish"]
-        out = causal_conv1d_cuda.causal_conv1d_fwd(x, weight, bias, ctx.activation)
+        # Create output tensor for new API
+        out = torch.empty_like(x)
+        # New API: causal_conv1d_fwd(x, weight, bias, seq_idx, initial_states, out, final_states_out, silu_activation)
+        # seq_idx=None, initial_states=None, final_states_out=None for standard operation
+        causal_conv1d_cuda.causal_conv1d_fwd(x, weight, bias, None, None, out, None, ctx.activation)
         return out
 
     @staticmethod
@@ -29,7 +33,7 @@ class CausalConv1dFn(torch.autograd.Function):
         # backward of conv1d with the backward of chunk).
         # Here we just pass in None and dx will be allocated in the C++ code.
         dx, dweight, dbias = causal_conv1d_cuda.causal_conv1d_bwd(
-            x, weight, bias, dout, None, ctx.activation
+            x, weight, bias, dout, None, None, None, ctx.activation
         )
         return dx, dweight, dbias if bias is not None else None, None
 
