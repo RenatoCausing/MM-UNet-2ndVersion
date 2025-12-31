@@ -1,11 +1,18 @@
 import os
+import sys
 import math
 import torch
 import warnings
 import torch.nn as nn
 from functools import partial
 import torch.nn.functional as F
-from mamba_ssm import Mamba
+
+# Add custom Mamba path for bimamba_type support
+_mamba_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'requirements', 'Mamba', 'mamba')
+if _mamba_path not in sys.path:
+    sys.path.insert(0, _mamba_path)
+
+from mamba_ssm.modules.mamba_simple import Mamba
 from timm.models.registry import register_model
 from mmengine.model import constant_init, kaiming_init
 from timm.models.layers import DropPath, to_2tuple, make_divisible, trunc_normal_

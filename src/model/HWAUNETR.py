@@ -14,8 +14,16 @@ import torch.nn as nn
 import torch.nn.functional as F
 # from __future__ import annotations
 import time
+import sys
+import os
 from typing import Tuple
-from mamba_ssm import Mamba
+
+# Add custom Mamba path for bimamba_type support
+_mamba_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'requirements', 'Mamba', 'mamba')
+if _mamba_path not in sys.path:
+    sys.path.insert(0, _mamba_path)
+
+from mamba_ssm.modules.mamba_simple import Mamba
 from einops import rearrange, repeat
 
 

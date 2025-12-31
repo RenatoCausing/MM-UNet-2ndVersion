@@ -3,9 +3,17 @@ import torch.nn as nn
 import torchvision.models as models
 import torch.nn.functional as F
 import timm
+import sys
+import os
 from src.UM_Net.DSC_conv import DSConv_pro
 # from DSC_conv import DSConv_pro
-from mamba_ssm import Mamba
+
+# Add custom Mamba path for bimamba_type support
+_mamba_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'requirements', 'Mamba', 'mamba')
+if _mamba_path not in sys.path:
+    sys.path.insert(0, _mamba_path)
+
+from mamba_ssm.modules.mamba_simple import Mamba
 
 class SELayer(nn.Module):
     def __init__(self, channel, reduction=16):
