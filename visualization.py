@@ -266,10 +266,34 @@ if __name__ == '__main__':
     #     monai.transforms.Activations(sigmoid=True)
     # ])
     
-    # 定义训练参数
-    optimizer = optim_factory.create_optimizer_v2(model, opt=config.trainer.optimizer,
-                                                  weight_decay=config.trainer.weight_decay,
-                                                  lr=config.trainer.lr, betas=(0.9, 0.95))
+    # 定义训练参数 - using torch.optim directly for compatibility
+    if config.trainer.optimizer.lower() == 'adamw':
+        optimizer = torch.optim.AdamW(
+            model.parameters(),
+            lr=config.trainer.lr,
+            weight_decay=config.trainer.weight_decay,
+            betas=(0.9, 0.95)
+        )
+    elif config.trainer.optimizer.lower() == 'adam':
+        optimizer = torch.optim.Adam(
+            model.parameters(),
+            lr=config.trainer.lr,
+            weight_decay=config.trainer.weight_decay,
+            betas=(0.9, 0.95)
+        )
+    elif config.trainer.optimizer.lower() == 'sgd':
+        optimizer = torch.optim.SGD(
+            model.parameters(),
+            lr=config.trainer.lr,
+            weight_decay=config.trainer.weight_decay,
+            momentum=0.9
+        )
+    else:
+        optimizer = optim_factory.create_optimizer_v2(
+            model, opt=config.trainer.optimizer,
+            weight_decay=config.trainer.weight_decay,
+            lr=config.trainer.lr, betas=(0.9, 0.95)
+        )
     scheduler = LinearWarmupCosineAnnealingLR(optimizer, warmup_epochs=config.trainer.warmup,
                                               max_epochs=config.trainer.num_epochs)
 
