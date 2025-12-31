@@ -34,15 +34,15 @@ echo "Using pip: $PIP"
 echo ""
 
 # Upgrade pip
-echo "[1/10] Upgrading pip..."
+echo "[1/12] Upgrading pip..."
 $PIP install --upgrade pip
 
 # Install PyTorch with CUDA 11.8 (compatible with V100)
-echo "[2/10] Installing PyTorch with CUDA support..."
+echo "[2/12] Installing PyTorch with CUDA support..."
 $PIP install torch==2.0.0+cu118 torchvision==0.15.0+cu118 torchaudio==2.0.0+cu118 --index-url https://download.pytorch.org/whl/cu118
 
 # Install core dependencies
-echo "[3/10] Installing core dependencies..."
+echo "[3/12] Installing core dependencies..."
 $PIP install \
     numpy>=1.21.0 \
     opencv-python>=4.5.0 \
@@ -52,7 +52,7 @@ $PIP install \
     scikit-image>=0.19.0
 
 # Install deep learning libraries
-echo "[4/10] Installing deep learning libraries..."
+echo "[4/12] Installing deep learning libraries..."
 $PIP install \
     timm==0.4.12 \
     monai>=1.0.0 \
@@ -60,7 +60,7 @@ $PIP install \
     einops>=0.6.0
 
 # Install utilities
-echo "[5/10] Installing utility packages..."
+echo "[5/12] Installing utility packages..."
 $PIP install \
     easydict \
     objprint>=0.2.3 \
@@ -72,14 +72,14 @@ $PIP install \
     wandb
 
 # Install medical imaging packages
-echo "[6/10] Installing medical imaging packages..."
+echo "[6/12] Installing medical imaging packages..."
 $PIP install \
     SimpleITK \
     nibabel \
     albumentations
 
 # Install additional requirements
-echo "[7/10] Installing additional packages..."
+echo "[7/12] Installing additional packages..."
 $PIP install \
     mmengine \
     yacs \
@@ -87,11 +87,23 @@ $PIP install \
     openpyxl
 
 # Install gdown for Google Drive downloads
-echo "[8/10] Installing gdown for Google Drive..."
+echo "[8/12] Installing gdown for Google Drive..."
 $PIP install gdown
 
+# Install packaging (needed for mamba)
+echo "[9/12] Installing packaging..."
+$PIP install packaging
+
+# Install causal-conv1d (required by mamba)
+echo "[10/12] Installing causal-conv1d..."
+$PIP install causal-conv1d>=1.1.0
+
+# Install mamba-ssm
+echo "[11/12] Installing mamba-ssm..."
+$PIP install mamba-ssm
+
 # Verify installations
-echo "[9/10] Verifying installations..."
+echo "[12/12] Verifying installations..."
 $PY -c "import torch; print(f'PyTorch: {torch.__version__}')"
 $PY -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
 $PY -c "import torch; print(f'CUDA version: {torch.version.cuda}')" || echo "CUDA version check skipped"
@@ -99,9 +111,11 @@ $PY -c "import torch; print(f'GPU count: {torch.cuda.device_count()}')" || echo 
 $PY -c "import monai; print(f'MONAI: {monai.__version__}')"
 $PY -c "import timm; print(f'timm: {timm.__version__}')"
 $PY -c "import accelerate; print(f'accelerate: {accelerate.__version__}')"
+$PY -c "import mamba_ssm; print(f'mamba_ssm: installed')" || echo "mamba_ssm check skipped"
 
 # Set CUDA memory allocation config for V100
-echo "[10/10] Setting environment variables..."
+echo ""
+echo "Setting environment variables..."
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 echo 'export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True' >> ~/.bashrc
 
